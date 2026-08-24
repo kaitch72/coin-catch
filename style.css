@@ -1,206 +1,366 @@
+/* ========================================
+   BASIC PAGE
+======================================== */
+
 * {
     box-sizing: border-box;
 }
 
 html,
 body {
+    margin: 0;
+    padding: 0;
+
     width: 100%;
     height: 100%;
-    margin: 0;
-}
 
-body {
-    font-family: Arial, sans-serif;
-    background: #dff3ff;
     overflow: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
-#game {
-    width: 100vw;
-    height: 100vh;
-}
 
-#top-bar {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-h1 {
-    margin: 0;
-    font-size: 48px;
-}
-
-#score {
-    position: absolute;
-    right: 30px;
-    font-size: 32px;
-    font-weight: bold;
-}
+/* ========================================
+   GAME AREA
+======================================== */
 
 #game-area {
+
     position: relative;
-    width: 100%;
-    height: calc(100vh - 100px);
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #dff1fc;
+
     overflow: hidden;
-    border-top: 3px solid #ffffff;
-}
-
-#piggy-bank {
-    position: absolute;
-
-    width: 100px;
-    height: 100px;
-
-    left: 50%;
-    bottom: 30px;
-
-    transform: translateX(-50%);
-
-    font-size: 80px;
-    line-height: 100px;
-    text-align: center;
-
-    user-select: none;
-    -webkit-user-select: none;
 
     touch-action: none;
-
-    cursor: grab;
 }
 
-#coin {
+
+/* ========================================
+   TOP BAR
+======================================== */
+
+#top-bar {
+
     position: absolute;
 
     top: 0;
-    left: 50%;
+    left: 0;
 
-    font-size: 60px;
+    width: 100%;
 
-    user-select: none;
-    pointer-events: none;
-}
+    height: 100px;
 
-#coin {
-    width: 70px;
-    height: 70px;
+    background: #dff1fc;
 
-    border-radius: 50%;
+    border-bottom:
+        3px solid white;
 
-    background: #f4c542;
-
-    border: 5px solid #d9a900;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 22px;
-    font-weight: bold;
-
-    color: #5c4500;
-
-    user-select: none;
-    pointer-events: none;
-}
-
-#coin-value {
-    pointer-events: none;
-}
-
-.falling-coin {
-    position: absolute;
-
-    border-radius: 50%;
-
-    background: #f4c542;
-
-    border: 5px solid #d9a900;
+    z-index: 20;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
-
-    font-weight: bold;
-
-    color: #5c4500;
-
-    user-select: none;
-
-    pointer-events: none;
-
-    box-sizing: border-box;
-
-    z-index: 5;
 }
 
-#feedback {
+
+/* ========================================
+   TITLE
+======================================== */
+
+#game-title {
+
     position: absolute;
 
-    left: 50%;
-    bottom: 140px;
+    top: 17px;
 
-    transform: translateX(-50%);
+    left: 50%;
+
+    transform:
+        translateX(-50%);
 
     font-size: 42px;
-    font-weight: bold;
+
+    font-weight: 900;
+
+    color: #111;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   LAST COIN CAUGHT DISPLAY
+======================================== */
+
+#earned-display {
+
+    position: absolute;
+
+    top: 62px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    font-size: 25px;
+
+    font-weight: 900;
+
+    color: #2997d6;
+
+    background: white;
+
+    padding:
+        5px 18px;
+
+    border-radius: 12px;
+
+    min-width: 150px;
+
+    text-align: center;
+
+    box-shadow:
+        0 3px 0
+        rgba(0, 0, 0, 0.08);
+
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   SCORE
+======================================== */
+
+#score {
+
+    position: absolute;
+
+    right: 28px;
+
+    top: 25px;
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    color: #111;
+}
+
+
+/* ========================================
+   TIMER
+======================================== */
+
+#timer-container {
+
+    position: absolute;
+
+    left: 28px;
+
+    top: 20px;
+
+    min-width: 60px;
+
+    height: 50px;
+
+    padding:
+        0 14px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    color: #2997d6;
+
+    box-shadow:
+        0 3px 0
+        rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================================
+   GAME SPACE
+======================================== */
+
+#game-space {
+
+    position: absolute;
+
+    left: 0;
+    top: 100px;
+
+    width: 100%;
+
+    height:
+        calc(100% - 100px);
+
+    overflow: hidden;
+}
+
+
+/* ========================================
+   PIGGY BANK
+======================================== */
+
+#piggy-bank {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 30px;
+
+    transform:
+        translateX(-50%);
+
+    width: 120px;
+
+    height: 120px;
+
+    font-size: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: grab;
+
+    user-select: none;
+
+    touch-action: none;
+
+    z-index: 10;
+}
+
+
+#piggy-bank:active {
+
+    cursor: grabbing;
+}
+
+
+/* ========================================
+   FALLING COINS
+======================================== */
+
+.falling-coin {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    user-select: none;
 
     pointer-events: none;
 
-    opacity: 0;
+    z-index: 5;
+
+    will-change: transform;
 }
 
+
+.falling-coin img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+/* ========================================
+   SPARKLE EFFECT
+======================================== */
+
 .catch-sparkle {
+
     position: absolute;
 
     font-size: 30px;
 
     pointer-events: none;
 
-    transform: translate(-50%, -50%) scale(0.5);
+    z-index: 40;
 
-    animation: sparkle-burst 0.6s ease-out forwards;
-
-    z-index: 20;
+    animation:
+        sparkleAnimation
+        0.6s
+        ease-out
+        forwards;
 }
 
 
-@keyframes sparkle-burst {
+@keyframes sparkleAnimation {
 
     0% {
+
         opacity: 1;
+
         transform:
-            translate(-50%, -50%)
+            translate(0, 0)
             scale(0.5);
     }
 
-    60% {
+
+    50% {
+
         opacity: 1;
+
+        transform:
+            translate(
+                var(--sparkle-x),
+                var(--sparkle-y)
+            )
+            scale(1.2);
     }
 
+
     100% {
+
         opacity: 0;
 
         transform:
             translate(
-                calc(-50% + var(--sparkle-x)),
-                calc(-50% + var(--sparkle-y))
+                var(--sparkle-x),
+                var(--sparkle-y)
             )
-            scale(1.3);
+            scale(0.7);
     }
-
-}
-
-#timer {
-    position: absolute;
-
-    left: 30px;
-
-    font-size: 32px;
-    font-weight: bold;
 }
 
 
@@ -209,124 +369,108 @@ h1 {
 ======================================== */
 
 #results-screen {
-    position: fixed;
 
-    top: 0;
-    left: 0;
+    position: absolute;
 
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
 
-    /* Blue game-colored backdrop */
-    background: rgba(41, 151, 214, 0.88);
+    background:
+        rgba(223, 241, 252, 0.94);
 
     display: none;
 
     align-items: center;
+
     justify-content: center;
 
     z-index: 100;
-
-    padding: 30px;
-
-    box-sizing: border-box;
 }
 
 
 /* ========================================
-   RESULTS CARD
+   RESULTS BOX
 ======================================== */
 
 #results-box {
-    position: relative;
 
-    width: min(700px, 90vw);
+    width: 620px;
 
-    background: white;
+    max-width: 80vw;
 
-    border-radius: 40px;
+    padding:
+        45px 50px 50px;
 
-    padding: 55px 50px 45px;
+    background: #dff1fc;
 
-    text-align: center;
+    border:
+        6px solid white;
 
-    box-sizing: border-box;
-
-    border: 8px solid #ffffff;
+    border-radius: 35px;
 
     box-shadow:
-        0 15px 0 rgba(0, 0, 0, 0.12),
-        0 25px 50px rgba(0, 0, 0, 0.2);
+        0 12px 30px
+        rgba(0, 0, 0, 0.18);
 
-    overflow: hidden;
+    text-align: center;
 }
 
 
 /* ========================================
-   DECORATIVE BLUE TOP
+   RESULT SPARKLES
 ======================================== */
 
-#results-box::before {
-    content: "";
+.results-sparkles {
 
-    position: absolute;
+    font-size: 38px;
 
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 18px;
-
-    background: #2997d6;
+    margin-bottom: 5px;
 }
 
 
 /* ========================================
-   TITLE
+   RESULT PIG
 ======================================== */
 
-#results-box h2 {
-    margin: 15px 0 5px;
+.results-pig {
 
-    font-size: 58px;
+    font-size: 100px;
 
     line-height: 1;
 
-    font-weight: 800;
-
-    color: #2997d6;
+    margin-bottom: 10px;
 }
 
 
 /* ========================================
-   PIG + COIN DECORATION
+   RESULT HEADING
 ======================================== */
 
-#results-box::after {
-    content: "🐷   🪙";
+#results-box h1 {
 
-    display: block;
+    margin:
+        0 0 12px;
 
-    font-size: 65px;
+    font-size: 52px;
 
-    margin: 20px 0 5px;
+    font-weight: 900;
 
-    letter-spacing: 10px;
+    color: #111;
 }
 
 
 /* ========================================
-   SCORE MESSAGE
+   RESULT TEXT
 ======================================== */
 
-#results-box p {
-    margin: 15px 0 5px;
+.results-message {
 
-    font-size: 30px;
+    margin: 8px 0;
 
-    font-weight: 600;
+    font-size: 25px;
 
-    color: #555;
+    font-weight: 700;
+
+    color: #333;
 }
 
 
@@ -335,45 +479,15 @@ h1 {
 ======================================== */
 
 #final-score {
-    position: relative;
 
-    font-size: 82px;
+    margin:
+        15px 0;
 
-    line-height: 1;
+    font-size: 64px;
 
     font-weight: 900;
 
     color: #2997d6;
-
-    margin: 15px 0 35px;
-}
-
-
-/* ========================================
-   SPARKLES AROUND SCORE
-======================================== */
-
-#final-score::before {
-    content: "✨";
-
-    position: absolute;
-
-    left: -55px;
-    top: -15px;
-
-    font-size: 42px;
-}
-
-
-#final-score::after {
-    content: "✨";
-
-    position: absolute;
-
-    right: -55px;
-    bottom: -5px;
-
-    font-size: 42px;
 }
 
 
@@ -382,48 +496,43 @@ h1 {
 ======================================== */
 
 #play-again {
+
+    margin-top: 20px;
+
+    padding:
+        18px 45px;
+
     border: none;
 
-    border-radius: 22px;
-
-    padding: 20px 45px;
+    border-radius: 18px;
 
     background: #2997d6;
 
     color: white;
 
-    font-size: 30px;
+    font-size: 28px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     cursor: pointer;
 
     box-shadow:
-        0 7px 0 #1d72a5;
-
-    transition:
-        transform 0.1s,
-        box-shadow 0.1s;
-
-    touch-action: manipulation;
+        0 5px 0 #1876aa;
 }
 
-
-/* Button pressed */
-
-#play-again:active {
-    transform: translateY(6px);
-
-    box-shadow:
-        0 1px 0 #1d72a5;
-}
-
-
-/* Button hover for desktop testing */
 
 #play-again:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px);
+}
+
+
+#play-again:active {
+
+    transform:
+        translateY(3px);
 
     box-shadow:
-        0 9px 0 #1d72a5;
+        0 2px 0 #1876aa;
 }

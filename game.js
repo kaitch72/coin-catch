@@ -1,33 +1,85 @@
+/* ========================================
+   GAME ELEMENTS
+======================================== */
+
 const piggyBank = document.getElementById("piggy-bank");
-const gameArea = document.getElementById("game-area");
+const gameArea = document.getElementById("game-space");
+const scoreDisplay = document.getElementById("score");
+const timerDisplay = document.getElementById("timer");
+const earnedDisplay = document.getElementById("earned-display");
+const resultsScreen = document.getElementById("results-screen");
+const finalScore = document.getElementById("final-score");
+const playAgainButton = document.getElementById("play-again");
 
 
-// ========================================
-// GAME VARIABLES
-// ========================================
+/* ========================================
+   GAME VARIABLES
+======================================== */
 
 let isDragging = false;
-
 let score = 0;
-
 let timeRemaining = 30;
-
 let gameRunning = true;
 
 let timerInterval;
-
 let coinSpawnInterval;
-
-const coinValues = [1, 5, 10, 25, 50];
 
 const coins = [];
 
 const MAX_COINS = 6;
 
 
-// ========================================
-// PIGGY BANK DRAGGING
-// ========================================
+/* ========================================
+   COIN TYPES
+========================================
+   Fixed sizes represent the real relative
+   sizes of U.S. coins.
+
+   Penny      = 1¢
+   Nickel     = 5¢
+   Dime       = 10¢
+   Quarter    = 25¢
+   Half Dollar = 50¢
+======================================== */
+
+const coinTypes = [
+
+    {
+        image: "images/penny.png",
+        value: 1,
+        size: 72
+    },
+
+    {
+        image: "images/nickel.png",
+        value: 5,
+        size: 80
+    },
+
+    {
+        image: "images/dime.png",
+        value: 10,
+        size: 68
+    },
+
+    {
+        image: "images/quarter.png",
+        value: 25,
+        size: 92
+    },
+
+    {
+        image: "images/half-dollar.png",
+        value: 50,
+        size: 98
+    }
+
+];
+
+
+/* ========================================
+   PIGGY BANK DRAGGING
+======================================== */
 
 piggyBank.addEventListener("pointerdown", (event) => {
 
@@ -50,17 +102,13 @@ piggyBank.addEventListener("pointermove", (event) => {
         return;
     }
 
-    const gameRect =
-        gameArea.getBoundingClientRect();
+    const gameRect = gameArea.getBoundingClientRect();
 
-    let x =
-        event.clientX - gameRect.left;
+    let x = event.clientX - gameRect.left;
 
-    const piggyWidth =
-        piggyBank.offsetWidth;
+    const piggyWidth = piggyBank.offsetWidth;
 
-    const halfPiggyWidth =
-        piggyWidth / 2;
+    const halfPiggyWidth = piggyWidth / 2;
 
 
     if (x < halfPiggyWidth) {
@@ -68,17 +116,12 @@ piggyBank.addEventListener("pointermove", (event) => {
     }
 
 
-    if (
-        x >
-        gameRect.width - halfPiggyWidth
-    ) {
-        x =
-            gameRect.width - halfPiggyWidth;
+    if (x > gameRect.width - halfPiggyWidth) {
+        x = gameRect.width - halfPiggyWidth;
     }
 
 
-    piggyBank.style.left =
-        `${x}px`;
+    piggyBank.style.left = `${x}px`;
 
 });
 
@@ -87,9 +130,15 @@ piggyBank.addEventListener("pointerup", (event) => {
 
     isDragging = false;
 
-    piggyBank.releasePointerCapture(
-        event.pointerId
-    );
+    try {
+
+        piggyBank.releasePointerCapture(event.pointerId);
+
+    } catch (error) {
+
+        // Nothing needed here
+
+    }
 
 });
 
@@ -101,221 +150,78 @@ piggyBank.addEventListener("pointercancel", () => {
 });
 
 
-// ========================================
-// SCORE
-// ========================================
+/* ========================================
+   UPDATE SCORE
+======================================== */
 
 function updateScore() {
 
-    const scoreDisplay =
-        document.getElementById("score");
-
-    scoreDisplay.textContent =
-        `$${score.toFixed(2)}`;
+    scoreDisplay.textContent = `$${score.toFixed(2)}`;
 
 }
 
 
-// ========================================
-// TIMER
-// ========================================
+/* ========================================
+   UPDATE TIMER
+======================================== */
 
 function updateTimer() {
 
-    const timerDisplay =
-        document.getElementById("timer");
-
-    timerDisplay.textContent =
-        timeRemaining;
+    timerDisplay.textContent = timeRemaining;
 
 }
 
+
+/* ========================================
+   SHOW LAST COIN CAUGHT
+======================================== */
+
+function showEarnedAmount(coinValue) {
+
+    earnedDisplay.textContent = `+${coinValue}¢`;
+
+}
+
+
+/* ========================================
+   START TIMER
+======================================== */
 
 function startTimer() {
 
     clearInterval(timerInterval);
 
-    timerInterval =
-        setInterval(() => {
+    timerInterval = setInterval(() => {
 
-            if (!gameRunning) {
-                return;
-            }
+        if (!gameRunning) {
+            return;
+        }
 
-            timeRemaining--;
+        timeRemaining--;
 
-            updateTimer();
-
-
-            if (timeRemaining <= 0) {
-
-                endGame();
-
-            }
-
-        }, 1000);
-
-}
+        updateTimer();
 
 
-// ========================================
-// END GAME
-// ========================================
+        if (timeRemaining <= 0) {
 
-function endGame() {
+            endGame();
 
-    gameRunning = false;
+        }
 
-    isDragging = false;
-
-    clearInterval(timerInterval);
-
-    clearInterval(coinSpawnInterval);
-
-
-    // Remove coins
-
-    for (
-        let i = coins.length - 1;
-        i >= 0;
-        i--
-    ) {
-
-        removeCoin(coins[i]);
-
-    }
-
-
-    // Show final score
-
-    const finalScore =
-        document.getElementById(
-            "final-score"
-        );
-
-    finalScore.textContent =
-        `$${score.toFixed(2)}`;
-
-
-    // Show results screen
-
-    const resultsScreen =
-        document.getElementById(
-            "results-screen"
-        );
-
-    resultsScreen.style.display =
-        "flex";
+    }, 1000);
 
 }
 
 
-// ========================================
-// PLAY AGAIN
-// ========================================
-
-document
-    .getElementById("play-again")
-    .addEventListener("click", () => {
-
-        startNewGame();
-
-    });
-
-
-// ========================================
-// START NEW GAME
-// ========================================
-
-function startNewGame() {
-
-    // Reset everything
-
-    score = 0;
-
-    timeRemaining = 30;
-
-    gameRunning = true;
-
-
-    updateScore();
-
-    updateTimer();
-
-
-    // Hide results
-
-    const resultsScreen =
-        document.getElementById(
-            "results-screen"
-        );
-
-    resultsScreen.style.display =
-        "none";
-
-
-    // Remove any leftover coins
-
-    for (
-        let i = coins.length - 1;
-        i >= 0;
-        i--
-    ) {
-
-        removeCoin(coins[i]);
-
-    }
-
-
-    // Create starting coins
-
-    createCoin();
-
-    setTimeout(
-        createCoin,
-        500
-    );
-
-    setTimeout(
-        createCoin,
-        1000
-    );
-
-
-    // Start spawning coins
-
-    coinSpawnInterval =
-        setInterval(() => {
-
-            createCoin();
-
-        }, 900);
-
-
-    // Start timer
-
-    startTimer();
-
-
-    // IMPORTANT:
-    // Restart the coin animation loop
-
-    requestAnimationFrame(updateCoins);
-
-}
-
-
-// ========================================
-// CATCH SPARKLE EFFECT
-// ========================================
+/* ========================================
+   SPARKLE EFFECT
+======================================== */
 
 function createSparkleBurst() {
 
-    const piggyRect =
-        piggyBank.getBoundingClientRect();
+    const piggyRect = piggyBank.getBoundingClientRect();
 
-    const gameRect =
-        gameArea.getBoundingClientRect();
+    const gameRect = gameArea.getBoundingClientRect();
 
 
     const centerX =
@@ -339,13 +245,9 @@ function createSparkleBurst() {
 
     for (let i = 0; i < 8; i++) {
 
-        const sparkle =
-            document.createElement("div");
+        const sparkle = document.createElement("div");
 
-
-        sparkle.classList.add(
-            "catch-sparkle"
-        );
+        sparkle.classList.add("catch-sparkle");
 
 
         sparkle.textContent =
@@ -357,11 +259,9 @@ function createSparkleBurst() {
             ];
 
 
-        sparkle.style.left =
-            `${centerX}px`;
+        sparkle.style.left = `${centerX}px`;
 
-        sparkle.style.top =
-            `${centerY}px`;
+        sparkle.style.top = `${centerY}px`;
 
 
         const angle =
@@ -398,9 +298,7 @@ function createSparkleBurst() {
         );
 
 
-        gameArea.appendChild(
-            sparkle
-        );
+        gameArea.appendChild(sparkle);
 
 
         setTimeout(() => {
@@ -414,9 +312,9 @@ function createSparkleBurst() {
 }
 
 
-// ========================================
-// CREATE COIN
-// ========================================
+/* ========================================
+   CREATE COIN
+======================================== */
 
 function createCoin() {
 
@@ -431,67 +329,87 @@ function createCoin() {
     const coinElement =
         document.createElement("div");
 
-
-    coinElement.classList.add(
-        "falling-coin"
-    );
+    coinElement.classList.add("falling-coin");
 
 
-    // ----------------------------------------
-    // RANDOM COIN VALUE
-    // ----------------------------------------
+    /* ------------------------------------
+       PICK RANDOM COIN
+    ------------------------------------ */
 
     const randomIndex =
         Math.floor(
             Math.random() *
-            coinValues.length
+            coinTypes.length
         );
 
 
-    const value =
-        coinValues[randomIndex];
+    const coinType =
+        coinTypes[randomIndex];
 
 
-    coinElement.textContent =
-        `${value}¢`;
+    /* ------------------------------------
+       CREATE IMAGE
+    ------------------------------------ */
+
+    const coinImage =
+        document.createElement("img");
 
 
-    // ----------------------------------------
-    // RANDOM COIN SIZE
-    // ----------------------------------------
+    coinImage.src =
+        coinType.image;
 
-    // Coins will be between 65px and 105px
 
-    const size =
-        65 +
-        Math.random() * 40;
+    /*
+       IMPORTANT:
 
+       Don't display "Falling coin" if
+       an image can't be found.
+    */
+
+    coinImage.alt = "";
+
+
+    /*
+       If an image filename is wrong,
+       remove the broken coin instead of
+       showing a little text box.
+    */
+
+    coinImage.onerror = () => {
+
+        console.warn(
+            `Could not load coin image: ${coinType.image}`
+        );
+
+        removeCoin(coin);
+
+    };
+
+
+    coinElement.appendChild(coinImage);
+
+
+    /* ------------------------------------
+       FIXED SIZE
+    ------------------------------------ */
 
     coinElement.style.width =
-        `${size}px`;
+        `${coinType.size}px`;
 
     coinElement.style.height =
-        `${size}px`;
+        `${coinType.size}px`;
 
 
-    // Scale the text with the coin
+    /* ------------------------------------
+       ADD TO GAME
+    ------------------------------------ */
 
-    coinElement.style.fontSize =
-        `${size * 0.30}px`;
-
-
-    // ----------------------------------------
-    // ADD COIN TO GAME
-    // ----------------------------------------
-
-    gameArea.appendChild(
-        coinElement
-    );
+    gameArea.appendChild(coinElement);
 
 
-    // ----------------------------------------
-    // RANDOM HORIZONTAL POSITION
-    // ----------------------------------------
+    /* ------------------------------------
+       RANDOM X POSITION
+    ------------------------------------ */
 
     const gameWidth =
         gameArea.clientWidth;
@@ -499,41 +417,36 @@ function createCoin() {
 
     const randomX =
         Math.random() *
-        (gameWidth - size);
+        (gameWidth - coinType.size);
 
 
-    // ----------------------------------------
-    // RANDOM FALLING SPEED
-    // ----------------------------------------
+    /* ------------------------------------
+       RANDOM FALLING SPEED
+    ------------------------------------ */
 
     const speed =
         2 +
-        Math.random() * 4;
+        Math.random() *
+        4;
 
 
-    // ----------------------------------------
-    // CREATE COIN OBJECT
-    // ----------------------------------------
+    /* ------------------------------------
+       COIN OBJECT
+    ------------------------------------ */
 
     const coin = {
 
-        element:
-            coinElement,
+        element: coinElement,
 
-        x:
-            randomX,
+        x: randomX,
 
-        y:
-            -size,
+        y: -coinType.size,
 
-        speed:
-            speed,
+        speed: speed,
 
-        value:
-            value,
+        value: coinType.value,
 
-        size:
-            size
+        size: coinType.size
 
     };
 
@@ -550,13 +463,21 @@ function createCoin() {
 }
 
 
-// ========================================
-// REMOVE COIN
-// ========================================
+/* ========================================
+   REMOVE COIN
+======================================== */
 
 function removeCoin(coin) {
 
-    coin.element.remove();
+    if (
+        coin &&
+        coin.element &&
+        coin.element.parentNode
+    ) {
+
+        coin.element.remove();
+
+    }
 
 
     const index =
@@ -565,25 +486,21 @@ function removeCoin(coin) {
 
     if (index !== -1) {
 
-        coins.splice(
-            index,
-            1
-        );
+        coins.splice(index, 1);
 
     }
 
 }
 
 
-// ========================================
-// COLLISION DETECTION
-// ========================================
+/* ========================================
+   CHECK COLLISION
+======================================== */
 
 function checkCollision(coin) {
 
     const coinRect =
         coin.element.getBoundingClientRect();
-
 
     const piggyRect =
         piggyBank.getBoundingClientRect();
@@ -608,14 +525,11 @@ function checkCollision(coin) {
 }
 
 
-// ========================================
-// UPDATE COINS
-// ========================================
+/* ========================================
+   UPDATE COINS
+======================================== */
 
 function updateCoins() {
-
-    // Stop this animation loop
-    // when the game ends
 
     if (!gameRunning) {
         return;
@@ -628,45 +542,50 @@ function updateCoins() {
         i--
     ) {
 
-        const coin =
-            coins[i];
+        const coin = coins[i];
 
 
-        // Move coin
+        /* Move coin */
 
-        coin.y +=
-            coin.speed;
+        coin.y += coin.speed;
 
 
         coin.element.style.top =
             `${coin.y}px`;
 
 
-        // Check collision
+        /* Check collision */
 
-        if (
-            checkCollision(coin)
-        ) {
+        if (checkCollision(coin)) {
 
-            score +=
-                coin.value / 100;
-
+            score += coin.value / 100;
 
             updateScore();
 
 
+            /* Show amount caught */
+
+            showEarnedAmount(
+                coin.value
+            );
+
+
+            /* Sparkle */
+
             createSparkleBurst();
 
 
-            removeCoin(coin);
+            /* Remove coin */
 
+            removeCoin(coin);
 
             continue;
 
         }
 
 
-        // Remove coin at bottom
+        /* Remove coin if it falls
+           off the bottom */
 
         if (
             coin.y >
@@ -680,6 +599,144 @@ function updateCoins() {
     }
 
 
+    requestAnimationFrame(updateCoins);
+
+}
+
+
+/* ========================================
+   END GAME
+======================================== */
+
+function endGame() {
+
+    gameRunning = false;
+
+    isDragging = false;
+
+
+    clearInterval(timerInterval);
+
+    clearInterval(coinSpawnInterval);
+
+
+    /* Remove remaining coins */
+
+    for (
+        let i = coins.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        removeCoin(coins[i]);
+
+    }
+
+
+    /* Final score */
+
+    finalScore.textContent =
+        `$${score.toFixed(2)}`;
+
+
+    /* Show results */
+
+    resultsScreen.style.display =
+        "flex";
+
+}
+
+
+/* ========================================
+   START NEW GAME
+======================================== */
+
+function startNewGame() {
+
+    score = 0;
+
+    timeRemaining = 30;
+
+    gameRunning = true;
+
+
+    updateScore();
+
+    updateTimer();
+
+
+    /* Reset top message */
+
+    earnedDisplay.textContent =
+        "Catch a coin!";
+
+
+    /* Hide results */
+
+    resultsScreen.style.display =
+        "none";
+
+
+    /* Remove old coins */
+
+    for (
+        let i = coins.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        removeCoin(coins[i]);
+
+    }
+
+
+    /* Start with several coins */
+
+    createCoin();
+
+
+    setTimeout(() => {
+
+        if (gameRunning) {
+            createCoin();
+        }
+
+    }, 500);
+
+
+    setTimeout(() => {
+
+        if (gameRunning) {
+            createCoin();
+        }
+
+    }, 1000);
+
+
+    /* Continue spawning */
+
+    clearInterval(coinSpawnInterval);
+
+
+    coinSpawnInterval =
+        setInterval(() => {
+
+            if (gameRunning) {
+
+                createCoin();
+
+            }
+
+        }, 900);
+
+
+    /* Start timer */
+
+    startTimer();
+
+
+    /* Start animation */
+
     requestAnimationFrame(
         updateCoins
     );
@@ -687,8 +744,22 @@ function updateCoins() {
 }
 
 
-// ========================================
-// START GAME
-// ========================================
+/* ========================================
+   PLAY AGAIN
+======================================== */
+
+playAgainButton.addEventListener(
+    "click",
+    () => {
+
+        startNewGame();
+
+    }
+);
+
+
+/* ========================================
+   START GAME
+======================================== */
 
 startNewGame();
