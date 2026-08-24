@@ -215,7 +215,20 @@ function startTimer() {
 
 /* ========================================
    SPARKLE EFFECT
+
+   Uses the brand's sparkle icon, tinted
+   Persian Blue / Blue Bird / Malibu instead
+   of colorful emoji so the effect stays
+   on-brand.
 ======================================== */
+
+const SPARKLE_ICON_MARKUP =
+    '<svg viewBox="0 0 179.8 170" aria-hidden="true">' +
+    '<polygon points="159.82 49.96 149.85 50 149.86 30 129.88 30 129.88 19.99 149.86 20 149.85 0 159.82 0 159.82 20 179.79 19.99 179.8 30 159.82 29.99 159.82 49.96"/>' +
+    '<polygon points="149.83 169.96 139.86 170 139.87 150 119.89 150 119.89 139.99 139.87 140 139.86 120 149.83 120 149.82 140 169.8 139.99 169.8 150 149.83 149.99 149.83 169.96"/>' +
+    '<path d="M64.87,149.82l-20.03-44.88L0,84.99l44.96-20.07,19.91-44.96,20.01,45.1,44.86,19.96-44.93,20-19.93,44.81ZM64.88,125.25l12.55-27.81,27.77-12.46-27.88-12.52-12.45-27.71-12.55,27.76-27.72,12.49,27.75,12.48,12.53,27.76Z"/>' +
+    '</svg>';
+
 
 function createSparkleBurst() {
 
@@ -236,10 +249,10 @@ function createSparkleBurst() {
         gameRect.top;
 
 
-    const sparkleEmojis = [
-        "✨",
-        "⭐",
-        "💫"
+    const sparkleTones = [
+        "tone-a",
+        "tone-b",
+        "tone-c"
     ];
 
 
@@ -249,14 +262,17 @@ function createSparkleBurst() {
 
         sparkle.classList.add("catch-sparkle");
 
-
-        sparkle.textContent =
-            sparkleEmojis[
+        sparkle.classList.add(
+            sparkleTones[
                 Math.floor(
                     Math.random() *
-                    sparkleEmojis.length
+                    sparkleTones.length
                 )
-            ];
+            ]
+        );
+
+
+        sparkle.innerHTML = SPARKLE_ICON_MARKUP;
 
 
         sparkle.style.left = `${centerX}px`;

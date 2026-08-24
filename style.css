@@ -1,4 +1,26 @@
 /* ========================================
+   SECURITYPLUS BRAND TOKENS
+   Sourced from "A Guide to Our Brand"
+======================================== */
+
+:root {
+
+    --blue-black:   #0A1724;
+    --persian-blue: #1943DC;
+    --blue-bird:    #258BFF;
+    --malibu:       #59D2FE;
+    --sky-blue:     #8BD1FF;
+    --onahau:       #CFF1F9;
+    --hawkes-blue:  #D7E7FF;
+    --magnolia:     #FBF5FE;
+    --mystic:       #E6ECEB;
+    --white:        #FFFFFF;
+
+    --font-brand: "Inter", Arial, Helvetica, sans-serif;
+}
+
+
+/* ========================================
    BASIC PAGE
 ======================================== */
 
@@ -16,10 +38,7 @@ body {
 
     overflow: hidden;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: var(--font-brand);
 }
 
 
@@ -34,7 +53,12 @@ body {
     width: 100vw;
     height: 100vh;
 
-    background: #dff1fc;
+    background:
+        linear-gradient(
+            180deg,
+            var(--hawkes-blue) 0%,
+            var(--onahau) 100%
+        );
 
     overflow: hidden;
 
@@ -55,12 +79,16 @@ body {
 
     width: 100%;
 
-    height: 100px;
+    height: 118px;
 
-    background: #dff1fc;
+    background: var(--white);
 
     border-bottom:
-        3px solid white;
+        3px solid var(--hawkes-blue);
+
+    box-shadow:
+        0 4px 14px
+        rgba(10, 23, 36, 0.08);
 
     z-index: 20;
 
@@ -68,7 +96,56 @@ body {
 
     align-items: center;
 
-    justify-content: center;
+    justify-content: space-between;
+
+    padding: 0 26px;
+}
+
+
+.topbar-col {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+}
+
+
+.topbar-left {
+    min-width: 150px;
+}
+
+
+.topbar-center {
+
+    align-items: center;
+
+    flex: 1;
+}
+
+
+.topbar-right {
+
+    align-items: flex-end;
+
+    min-width: 90px;
+}
+
+
+/* ========================================
+   BRAND LOGO
+======================================== */
+
+.brand-logo {
+
+    height: 33px;
+
+    width: auto;
+
+    display: block;
 }
 
 
@@ -78,20 +155,11 @@ body {
 
 #game-title {
 
-    position: absolute;
+    font-size: 38px;
 
-    top: 17px;
+    font-weight: 800;
 
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    font-size: 42px;
-
-    font-weight: 900;
-
-    color: #111;
+    color: var(--blue-black);
 
     line-height: 1;
 
@@ -105,35 +173,22 @@ body {
 
 #earned-display {
 
-    position: absolute;
+    font-size: 22px;
 
-    top: 62px;
+    font-weight: 700;
 
-    left: 50%;
+    color: var(--persian-blue);
 
-    transform:
-        translateX(-50%);
-
-    font-size: 25px;
-
-    font-weight: 900;
-
-    color: #2997d6;
-
-    background: white;
+    background: var(--onahau);
 
     padding:
         5px 18px;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     min-width: 150px;
 
     text-align: center;
-
-    box-shadow:
-        0 3px 0
-        rgba(0, 0, 0, 0.08);
 
     white-space: nowrap;
 }
@@ -143,19 +198,40 @@ body {
    SCORE
 ======================================== */
 
+#score-label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: var(--blue-bird);
+}
+
+
+.score-icon {
+
+    width: 13px;
+    height: 13px;
+
+    fill: var(--blue-bird);
+}
+
+
 #score {
-
-    position: absolute;
-
-    right: 28px;
-
-    top: 25px;
 
     font-size: 30px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    color: #111;
+    color: var(--blue-black);
 }
 
 
@@ -165,22 +241,16 @@ body {
 
 #timer-container {
 
-    position: absolute;
-
-    left: 28px;
-
-    top: 20px;
-
     min-width: 60px;
 
-    height: 50px;
+    height: 40px;
 
     padding:
         0 14px;
 
-    border-radius: 16px;
+    border-radius: 14px;
 
-    background: white;
+    background: var(--onahau);
 
     display: flex;
 
@@ -188,15 +258,22 @@ body {
 
     justify-content: center;
 
-    font-size: 28px;
+    gap: 6px;
 
-    font-weight: 900;
+    font-size: 22px;
 
-    color: #2997d6;
+    font-weight: 800;
 
-    box-shadow:
-        0 3px 0
-        rgba(0, 0, 0, 0.08);
+    color: var(--persian-blue);
+}
+
+
+.timer-icon {
+
+    width: 12px;
+    height: 16px;
+
+    fill: var(--persian-blue);
 }
 
 
@@ -209,14 +286,23 @@ body {
     position: absolute;
 
     left: 0;
-    top: 100px;
+    top: 118px;
 
     width: 100%;
 
     height:
-        calc(100% - 100px);
+        calc(100% - 118px);
 
     overflow: hidden;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(37, 139, 255, 0.10) 1.5px,
+            transparent 1.5px
+        );
+
+    background-size: 34px 34px;
 }
 
 
@@ -235,11 +321,9 @@ body {
     transform:
         translateX(-50%);
 
-    width: 120px;
+    width: 128px;
 
-    height: 120px;
-
-    font-size: 100px;
+    height: 128px;
 
     display: flex;
 
@@ -260,6 +344,54 @@ body {
 #piggy-bank:active {
 
     cursor: grabbing;
+}
+
+
+.piggy-badge {
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: 50%;
+
+    background: var(--white);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 8px 0 var(--hawkes-blue),
+        0 10px 16px rgba(10, 23, 36, 0.18);
+
+    border: 4px solid var(--persian-blue);
+}
+
+
+.piggy-icon {
+
+    width: 60%;
+    height: 60%;
+
+    fill: var(--persian-blue);
+}
+
+
+.piggy-badge--results {
+
+    width: 110px;
+    height: 110px;
+
+    margin: 0 auto;
+
+    border-width: 3px;
+
+    box-shadow:
+        0 6px 0 rgba(255, 255, 255, 0.25),
+        0 8px 14px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -300,6 +432,11 @@ body {
     pointer-events: none;
 
     user-select: none;
+
+    filter:
+        drop-shadow(
+            0 3px 6px rgba(10, 23, 36, 0.25)
+        );
 }
 
 
@@ -311,7 +448,8 @@ body {
 
     position: absolute;
 
-    font-size: 30px;
+    width: 22px;
+    height: 22px;
 
     pointer-events: none;
 
@@ -323,6 +461,21 @@ body {
         ease-out
         forwards;
 }
+
+
+.catch-sparkle svg {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+}
+
+
+.catch-sparkle.tone-a svg { fill: var(--persian-blue); }
+.catch-sparkle.tone-b svg { fill: var(--blue-bird); }
+.catch-sparkle.tone-c svg { fill: var(--malibu); }
 
 
 @keyframes sparkleAnimation {
@@ -375,7 +528,7 @@ body {
     inset: 0;
 
     background:
-        rgba(223, 241, 252, 0.94);
+        rgba(10, 23, 36, 0.92);
 
     display: none;
 
@@ -393,25 +546,52 @@ body {
 
 #results-box {
 
+    position: relative;
+
+    overflow: hidden;
+
     width: 620px;
 
     max-width: 80vw;
 
     padding:
-        45px 50px 50px;
+        45px 50px 40px;
 
-    background: #dff1fc;
-
-    border:
-        6px solid white;
+    background:
+        linear-gradient(
+            160deg,
+            var(--blue-black) 0%,
+            var(--persian-blue) 100%
+        );
 
     border-radius: 35px;
 
     box-shadow:
-        0 12px 30px
-        rgba(0, 0, 0, 0.18);
+        0 20px 40px
+        rgba(0, 0, 0, 0.35);
 
     text-align: center;
+}
+
+
+#results-box::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.05;
+
+    background-image:
+        url("images/brand-arrow-tile.png");
+
+    background-repeat: repeat;
+
+    background-size: 84px 84px;
 }
 
 
@@ -421,9 +601,33 @@ body {
 
 .results-sparkles {
 
-    font-size: 38px;
+    position: relative;
 
-    margin-bottom: 5px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-bottom: 10px;
+}
+
+
+.results-sparkle-icon {
+
+    width: 20px;
+    height: 20px;
+
+    fill: var(--malibu);
+}
+
+
+.results-sparkle-icon:nth-child(2) {
+
+    width: 26px;
+    height: 26px;
 }
 
 
@@ -433,11 +637,11 @@ body {
 
 .results-pig {
 
-    font-size: 100px;
+    position: relative;
 
     line-height: 1;
 
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 
@@ -447,14 +651,35 @@ body {
 
 #results-box h1 {
 
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
     margin:
         0 0 12px;
 
-    font-size: 52px;
+    font-size: 48px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    color: #111;
+    color: var(--white);
+}
+
+
+.trophy-icon {
+
+    width: 40px;
+    height: 40px;
+
+    fill: var(--malibu);
+
+    flex-shrink: 0;
 }
 
 
@@ -464,13 +689,15 @@ body {
 
 .results-message {
 
+    position: relative;
+
     margin: 8px 0;
 
-    font-size: 25px;
+    font-size: 22px;
 
-    font-weight: 700;
+    font-weight: 500;
 
-    color: #333;
+    color: var(--hawkes-blue);
 }
 
 
@@ -480,14 +707,16 @@ body {
 
 #final-score {
 
+    position: relative;
+
     margin:
-        15px 0;
+        14px 0;
 
-    font-size: 64px;
+    font-size: 60px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    color: #2997d6;
+    color: var(--malibu);
 }
 
 
@@ -497,7 +726,17 @@ body {
 
 #play-again {
 
-    margin-top: 20px;
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 18px;
 
     padding:
         18px 45px;
@@ -506,18 +745,31 @@ body {
 
     border-radius: 18px;
 
-    background: #2997d6;
+    background: var(--white);
 
-    color: white;
+    color: var(--persian-blue);
 
-    font-size: 28px;
+    font-family: var(--font-brand);
 
-    font-weight: 900;
+    font-size: 26px;
+
+    font-weight: 800;
 
     cursor: pointer;
 
     box-shadow:
-        0 5px 0 #1876aa;
+        0 5px 0 var(--hawkes-blue);
+}
+
+
+.replay-icon {
+
+    width: 22px;
+    height: 22px;
+
+    fill: var(--persian-blue);
+
+    flex-shrink: 0;
 }
 
 
@@ -525,6 +777,8 @@ body {
 
     transform:
         translateY(-2px);
+
+    background: var(--onahau);
 }
 
 
@@ -534,5 +788,25 @@ body {
         translateY(3px);
 
     box-shadow:
-        0 2px 0 #1876aa;
+        0 2px 0 var(--hawkes-blue);
+}
+
+
+/* ========================================
+   RESULTS FOOTER (BRAND CREDIT)
+======================================== */
+
+.results-footer {
+
+    position: relative;
+
+    margin-top: 22px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.4px;
+
+    color: var(--sky-blue);
 }
