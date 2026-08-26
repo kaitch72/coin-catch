@@ -18,39 +18,44 @@
 
     <div id="game-area">
 
-        <!-- TOP BAR -->
+        <!-- TOP BAR
+             Same structure for every finlit game:
+             logo + game title, nothing else. Per-game
+             info lives in floating cards below. -->
         <div id="top-bar">
 
-            <!-- LEFT: brand lockup + timer -->
-            <div class="topbar-col topbar-left">
+            <img class="brand-logo" src="images/color-logo.png" alt="Securityplus Federal Credit Union">
 
-                <img class="brand-logo" src="images/color-logo.png" alt="Securityplus Federal Credit Union">
-
-                <div id="timer-container">
-                    <svg class="timer-icon" viewBox="0 0 119.92 160" aria-hidden="true">
-                        <path d="M119.82,160H.09S0,150.01,0,150.01l10.02-.02v-37.63s41.77-32.36,41.77-32.36L10.01,47.61V9.99s-10.01.01-10.01.01L.1,0h119.73s.09,9.99.09,9.99l-10.02.02v37.54s-41.89,32.46-41.89,32.46l41.88,32.44v37.56s10.03-.01,10.03-.01l-.1,10ZM99.94,10H19.98v30h79.96V10ZM90.02,50.07l-60.41-.05,30.32,23.76,30.09-23.71ZM99.92,120c.18-2.13-.21-2.65-1.29-3.5l-38.7-30.26-39.78,31.07-.16,2.69h79.94ZM99.94,130H19.98v20h79.96v-20Z" />
-                    </svg>
-                    <span id="timer">30</span>
-                </div>
-
+            <div id="game-title">
+                Coin Catch
             </div>
 
-            <!-- CENTER: title + last coin caught -->
-            <div class="topbar-col topbar-center">
+            <button id="restart-button" type="button" aria-label="Restart game">
+                <svg class="restart-icon" viewBox="0 0 159.96 159.68" aria-hidden="true">
+                    <path d="M125.32,26.76C95.65,1.7,52.69,5.35,27.33,34.19c-21.87,24.87-23.31,61.46-2.78,87.95,13.93,17.98,35.56,28.66,58.69,27.5,26.47-1.33,49.6-17.28,60.77-41.29l9.02,4c-13.16,28.84-42.03,47.62-73.83,47.32-24.66-.24-47.44-12.11-62.44-31.37C-1.06,105.46-5.06,74.83,6.64,48.33,18.38,21.75,43.54,3.07,72.72.41c23.8-2.17,47.42,6.05,63.87,23.13l13.4,13.91V0s9.97.02,9.97.02v54.9s-54.93,0-54.93,0l-.02-9.97,38.3-.04c-6.07-6.32-11.63-12.78-17.97-18.14Z"/>
+                </svg>
+            </button>
 
-                <div id="game-title">
-                    Coin Catch
-                </div>
+        </div>
 
-                <!-- Shows the most recently caught coin -->
-                <div id="earned-display">
-                    Catch a coin!
-                </div>
 
+        <!-- GAME AREA -->
+        <div id="game-space">
+
+            <!-- FLOATING STAT CARDS
+                 Per-game info floats over the play
+                 area instead of living in the top
+                 bar, so the header stays identical
+                 across every finlit game. -->
+
+            <div id="timer-container" class="stat-card">
+                <svg class="timer-icon" viewBox="0 0 119.92 160" aria-hidden="true">
+                    <path d="M119.82,160H.09S0,150.01,0,150.01l10.02-.02v-37.63s41.77-32.36,41.77-32.36L10.01,47.61V9.99s-10.01.01-10.01.01L.1,0h119.73s.09,9.99.09,9.99l-10.02.02v37.54s-41.89,32.46-41.89,32.46l41.88,32.44v37.56s10.03-.01,10.03-.01l-.1,10ZM99.94,10H19.98v30h79.96V10ZM90.02,50.07l-60.41-.05,30.32,23.76,30.09-23.71ZM99.92,120c.18-2.13-.21-2.65-1.29-3.5l-38.7-30.26-39.78,31.07-.16,2.69h79.94ZM99.94,130H19.98v20h79.96v-20Z" />
+                </svg>
+                <span id="timer">30</span>
             </div>
 
-            <!-- RIGHT: score -->
-            <div class="topbar-col topbar-right">
+            <div class="stat-card score-card">
 
                 <div id="score-label">
                     <svg class="score-icon" viewBox="0 0 159.81 159.05" aria-hidden="true">
@@ -64,12 +69,6 @@
                 </div>
 
             </div>
-
-        </div>
-
-
-        <!-- GAME AREA -->
-        <div id="game-space">
 
             <div id="piggy-bank">
                 <div class="piggy-badge">

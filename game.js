@@ -10,6 +10,7 @@ const earnedDisplay = document.getElementById("earned-display");
 const resultsScreen = document.getElementById("results-screen");
 const finalScore = document.getElementById("final-score");
 const playAgainButton = document.getElementById("play-again");
+const restartButton = document.getElementById("restart-button");
 
 
 /* ========================================
@@ -178,7 +179,9 @@ function updateTimer() {
 
 function showEarnedAmount(coinValue) {
 
-    earnedDisplay.textContent = `+${coinValue}¢`;
+    if (earnedDisplay) {
+        earnedDisplay.textContent = `+${coinValue}¢`;
+    }
 
 }
 
@@ -683,8 +686,10 @@ function startNewGame() {
 
     /* Reset top message */
 
-    earnedDisplay.textContent =
-        "Catch a coin!";
+    if (earnedDisplay) {
+        earnedDisplay.textContent =
+            "Catch a coin!";
+    }
 
 
     /* Hide results */
@@ -772,6 +777,28 @@ playAgainButton.addEventListener(
 
     }
 );
+
+
+/* ========================================
+   TOP BAR RESTART BUTTON
+
+   Same "start over" action as Play Again,
+   just always available from the top bar
+   instead of only on the results screen.
+======================================== */
+
+if (restartButton) {
+
+    restartButton.addEventListener(
+        "click",
+        () => {
+
+            startNewGame();
+
+        }
+    );
+
+}
 
 
 /* ========================================

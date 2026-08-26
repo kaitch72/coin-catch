@@ -17,11 +17,39 @@
     --white:        #FFFFFF;
 
     --font-brand: "Inter", Arial, Helvetica, sans-serif;
+
+    /* Shared "stat card" chrome — matches the
+       brand style-guide card used across the
+       finlit game suite (Budget Builder,
+       Driver Decides, Lemonade Stand, etc.) */
+    --card-radius: 16px;
+    --card-border: 1.5px solid var(--hawkes-blue);
+    --card-shadow: 0 2px 6px rgba(10, 23, 36, 0.06);
+
+    /* Same header height on every game, since
+       the top bar is now just logo + title. */
+    --header-height: 90px;
+
+    /* Standard offset for floating cards from
+       the edges of the play area. */
+    --float-gap: 20px;
+
+    /* Every finlit game renders on a fixed
+       1920x1080 stage, centered on the page
+       background, as its own rounded card. */
+    --stage-width: 1920px;
+    --stage-height: 1080px;
+    --stage-radius: 28px;
 }
 
 
 /* ========================================
    BASIC PAGE
+
+   The page itself is the neutral brand
+   canvas (Mystic) that every game's fixed
+   1920x1080 stage sits on top of, centered,
+   as its own rounded card.
 ======================================== */
 
 * {
@@ -36,22 +64,53 @@ body {
     width: 100%;
     height: 100%;
 
-    overflow: hidden;
-
     font-family: var(--font-brand);
+
+    background: var(--mystic);
+}
+
+body {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: auto;
 }
 
 
 /* ========================================
-   GAME AREA
+   GAME AREA (STAGE)
+
+   Fixed 1920x1080 — same for every finlit
+   game — rendered as a rounded card on the
+   Mystic page background.
 ======================================== */
 
 #game-area {
 
     position: relative;
 
-    width: 100vw;
-    height: 100vh;
+    flex-shrink: 0;
+
+    width: var(--stage-width);
+    height: var(--stage-height);
+
+    /* Scale the fixed 1920x1080 stage to fit
+       whatever window/screen it's shown in,
+       without ever blowing it up past 100%. */
+    transform:
+        scale(
+            min(
+                1,
+                calc(100vw / var(--stage-width)),
+                calc(100vh / var(--stage-height))
+            )
+        );
+
+    border-radius: var(--stage-radius);
 
     background:
         linear-gradient(
@@ -59,6 +118,10 @@ body {
             var(--hawkes-blue) 0%,
             var(--onahau) 100%
         );
+
+    box-shadow:
+        0 24px 60px
+        rgba(10, 23, 36, 0.18);
 
     overflow: hidden;
 
@@ -68,6 +131,10 @@ body {
 
 /* ========================================
    TOP BAR
+
+   Identical for every finlit game: logo,
+   title, done. No per-game content lives
+   here — see FLOATING STAT CARDS below.
 ======================================== */
 
 #top-bar {
@@ -79,12 +146,9 @@ body {
 
     width: 100%;
 
-    height: 118px;
+    height: var(--header-height);
 
     background: var(--white);
-
-    border-bottom:
-        3px solid var(--hawkes-blue);
 
     box-shadow:
         0 4px 14px
@@ -92,46 +156,77 @@ body {
 
     z-index: 20;
 
-    display: flex;
+    display: grid;
+
+    grid-template-columns: 1fr auto 1fr;
 
     align-items: center;
-
-    justify-content: space-between;
 
     padding: 0 26px;
 }
 
 
-.topbar-col {
+/* ========================================
+   RESTART BUTTON
+
+   Sits where the logo's mirrored spacer used
+   to — same column, same job of keeping the
+   title centered, now doing double duty as
+   the always-available restart control every
+   finlit game shares.
+======================================== */
+
+#restart-button {
+
+    justify-self: end;
+
+    width: 40px;
+    height: 40px;
 
     display: flex;
 
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 8px;
-}
-
-
-.topbar-left {
-    min-width: 150px;
-}
-
-
-.topbar-center {
-
     align-items: center;
 
-    flex: 1;
+    justify-content: center;
+
+    border: 1.5px solid var(--hawkes-blue);
+
+    border-radius: 50%;
+
+    background: var(--white);
+
+    box-shadow: var(--card-shadow);
+
+    cursor: pointer;
+
+    padding: 0;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease;
 }
 
 
-.topbar-right {
+.restart-icon {
 
-    align-items: flex-end;
+    width: 17px;
+    height: 17px;
 
-    min-width: 90px;
+    fill: var(--persian-blue);
+}
+
+
+#restart-button:hover {
+
+    background: var(--onahau);
+
+    transform: translateY(-1px);
+}
+
+
+#restart-button:active {
+
+    transform: translateY(1px) scale(0.94);
 }
 
 
@@ -146,6 +241,8 @@ body {
     width: auto;
 
     display: block;
+
+    justify-self: start;
 }
 
 
@@ -154,6 +251,8 @@ body {
 ======================================== */
 
 #game-title {
+
+    justify-self: center;
 
     font-size: 38px;
 
@@ -168,35 +267,32 @@ body {
 
 
 /* ========================================
-   LAST COIN CAUGHT DISPLAY
+   SCORE
+
+   Floats top-right over the play area.
 ======================================== */
 
-#earned-display {
+.score-card {
 
-    font-size: 22px;
+    position: absolute;
 
-    font-weight: 700;
+    top: var(--float-gap);
+    right: var(--float-gap);
 
-    color: var(--persian-blue);
+    z-index: 20;
 
-    background: var(--onahau);
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 4px;
 
     padding:
-        5px 18px;
-
-    border-radius: 14px;
-
-    min-width: 150px;
-
-    text-align: center;
-
-    white-space: nowrap;
+        7px 18px;
 }
 
-
-/* ========================================
-   SCORE
-======================================== */
 
 #score-label {
 
@@ -212,7 +308,7 @@ body {
 
     letter-spacing: 1.5px;
 
-    color: var(--blue-bird);
+    color: var(--persian-blue);
 }
 
 
@@ -221,7 +317,7 @@ body {
     width: 13px;
     height: 13px;
 
-    fill: var(--blue-bird);
+    fill: var(--persian-blue);
 }
 
 
@@ -236,21 +332,48 @@ body {
 
 
 /* ========================================
+   STAT CARD (shared brand card look)
+   Used for the Timer + Saved displays so
+   they read as one consistent component,
+   matching the brand style-guide card used
+   across the other finlit games. Purely a
+   visual treatment — position and content
+   of each display stay exactly as they are.
+======================================== */
+
+.stat-card {
+
+    background: var(--white);
+
+    border: var(--card-border);
+
+    border-radius: var(--card-radius);
+
+    box-shadow: var(--card-shadow);
+}
+
+
+/* ========================================
    TIMER
+
+   Floats top-left over the play area.
 ======================================== */
 
 #timer-container {
 
-    min-width: 60px;
+    position: absolute;
 
-    height: 40px;
+    top: var(--float-gap);
+    left: var(--float-gap);
+
+    z-index: 20;
+
+    min-width: 64px;
+
+    height: 44px;
 
     padding:
-        0 14px;
-
-    border-radius: 14px;
-
-    background: var(--onahau);
+        0 18px;
 
     display: flex;
 
@@ -286,23 +409,16 @@ body {
     position: absolute;
 
     left: 0;
-    top: 118px;
+    top: var(--header-height);
 
     width: 100%;
 
     height:
-        calc(100% - 118px);
+        calc(100% - var(--header-height));
 
     overflow: hidden;
 
-    background-image:
-        radial-gradient(
-            circle,
-            rgba(37, 139, 255, 0.10) 1.5px,
-            transparent 1.5px
-        );
-
-    background-size: 34px 34px;
+    background: var(--hawkes-blue);
 }
 
 
