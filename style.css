@@ -926,3 +926,353 @@ body {
 
     color: var(--sky-blue);
 }
+
+
+/* ========================================
+   START SCREEN
+
+   The welcome popup, shown on load before
+   the first round. A slight scrim over the
+   game screen (piggy bank, HUD all still
+   visible underneath, just dimmed) rather
+   than a solid takeover — the popup card is
+   the point, not a second background.
+======================================== */
+
+#start-screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(10, 23, 36, 0.35);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 110;
+}
+
+
+/* ========================================
+   START BOX
+======================================== */
+
+#start-box {
+
+    position: relative;
+
+    overflow: hidden;
+
+    width: 560px;
+
+    max-width: 80vw;
+
+    padding:
+        56px 55px 50px;
+
+    background: var(--white);
+
+    border-radius: 40px;
+
+    box-shadow:
+        0 24px 60px
+        rgba(10, 23, 36, 0.22);
+
+    text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+#start-box::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -70px;
+    right: -70px;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: var(--onahau);
+
+    z-index: 0;
+}
+
+
+#start-box::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: -90px;
+    left: -60px;
+
+    width: 170px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    background: var(--onahau);
+
+    opacity: 0.6;
+
+    z-index: 0;
+}
+
+
+/* ========================================
+   START BADGE (animated icon sticker)
+======================================== */
+
+.start-badge-wrap {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 120px;
+    height: 120px;
+
+    margin-bottom: 30px;
+
+    animation:
+        startBadgeFloat
+        3.2s
+        ease-in-out
+        infinite;
+}
+
+
+.start-badge {
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--persian-blue) 0%,
+            var(--blue-bird) 100%
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 14px 26px
+        rgba(25, 67, 220, 0.35);
+}
+
+
+.start-badge-icon {
+
+    width: 56px;
+    height: 56px;
+
+    fill: var(--white);
+}
+
+
+@keyframes startBadgeFloat {
+
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(-5deg);
+    }
+}
+
+
+/* ========================================
+   START SPARKLES
+======================================== */
+
+.start-sparkle {
+
+    position: absolute;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    animation:
+        startTwinkle
+        1.8s
+        ease-in-out
+        infinite;
+}
+
+
+.start-sparkle svg {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+.start-sparkle--a {
+
+    top: -8px;
+    left: -12px;
+
+    width: 24px;
+    height: 24px;
+
+    fill: var(--blue-bird);
+}
+
+
+.start-sparkle--b {
+
+    bottom: 2px;
+    right: -10px;
+
+    width: 17px;
+    height: 17px;
+
+    fill: var(--malibu);
+
+    animation-delay: 0.5s;
+}
+
+
+@keyframes startTwinkle {
+
+    0%, 100% {
+        opacity: 0.95;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.35;
+        transform: scale(0.7);
+    }
+}
+
+
+/* ========================================
+   START HEADING + MESSAGE
+======================================== */
+
+#start-box h1 {
+
+    position: relative;
+
+    z-index: 1;
+
+    margin: 0 0 16px;
+
+    font-size: 40px;
+
+    font-weight: 800;
+
+    color: var(--blue-black);
+
+    letter-spacing: -0.01em;
+}
+
+
+.start-message {
+
+    position: relative;
+
+    z-index: 1;
+
+    margin: 0 0 34px;
+
+    max-width: 380px;
+
+    font-size: 19px;
+
+    font-weight: 500;
+
+    line-height: 1.55;
+
+    color: rgba(10, 23, 36, 0.68);
+}
+
+
+/* ========================================
+   START BUTTON
+======================================== */
+
+#start-button {
+
+    position: relative;
+
+    z-index: 1;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        20px 64px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: var(--persian-blue);
+
+    color: var(--white);
+
+    font-family: var(--font-brand);
+
+    font-size: 26px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 var(--sky-blue);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+
+#start-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 0 var(--sky-blue);
+}
+
+
+#start-button:active {
+
+    transform: translateY(3px);
+
+    box-shadow:
+        0 2px 0 var(--sky-blue);
+}

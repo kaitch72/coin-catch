@@ -11,6 +11,8 @@ const resultsScreen = document.getElementById("results-screen");
 const finalScore = document.getElementById("final-score");
 const playAgainButton = document.getElementById("play-again");
 const restartButton = document.getElementById("restart-button");
+const startScreen = document.getElementById("start-screen");
+const startButton = document.getElementById("start-button");
 
 
 /* ========================================
@@ -698,6 +700,14 @@ function startNewGame() {
         "none";
 
 
+    /* Hide start screen */
+
+    if (startScreen) {
+        startScreen.style.display =
+            "none";
+    }
+
+
     /* Remove old coins */
 
     for (
@@ -802,7 +812,31 @@ if (restartButton) {
 
 
 /* ========================================
-   START GAME
+   START SCREEN
+
+   Show the welcome popup on load instead of
+   dropping straight into play. The round
+   itself only begins once Start is tapped.
 ======================================== */
 
-startNewGame();
+updateScore();
+updateTimer();
+
+if (startScreen) {
+
+    startScreen.style.display = "flex";
+
+}
+
+if (startButton) {
+
+    startButton.addEventListener(
+        "click",
+        () => {
+
+            startNewGame();
+
+        }
+    );
+
+}
