@@ -561,8 +561,12 @@ body {
 
     position: absolute;
 
-    width: 22px;
-    height: 22px;
+    /* Bumped from 22px (2026-09-11) -- the four star shapes have more
+       internal detail (a shaded facet + highlight per point) than the old
+       flat glyph, same reason the Lemonade Stand game sized its own
+       stars up from 22px to 26px. */
+    width: 28px;
+    height: 28px;
 
     pointer-events: none;
 
@@ -586,19 +590,19 @@ body {
 }
 
 
-.catch-sparkle.tone-a svg { fill: var(--persian-blue); }
-.catch-sparkle.tone-b svg { fill: var(--blue-bird); }
-.catch-sparkle.tone-c svg { fill: var(--malibu); }
-
-
 @keyframes sparkleAnimation {
 
+    /* translate(-50%, -50%) centers the sparkle on the piggy bank's exact
+       center point (left/top only place its top-left corner there) --
+       every step below keeps that centering and adds the radiate-outward
+       offset on top of it, same technique as the Lemonade Stand game's
+       sparkle-burst keyframes. */
     0% {
 
         opacity: 1;
 
         transform:
-            translate(0, 0)
+            translate(-50%, -50%)
             scale(0.5);
     }
 
@@ -609,8 +613,8 @@ body {
 
         transform:
             translate(
-                var(--sparkle-x),
-                var(--sparkle-y)
+                calc(-50% + var(--sparkle-x)),
+                calc(-50% + var(--sparkle-y))
             )
             scale(1.2);
     }
@@ -622,8 +626,8 @@ body {
 
         transform:
             translate(
-                var(--sparkle-x),
-                var(--sparkle-y)
+                calc(-50% + var(--sparkle-x)),
+                calc(-50% + var(--sparkle-y))
             )
             scale(0.7);
     }

@@ -236,18 +236,58 @@ function startTimer() {
 /* ========================================
    SPARKLE EFFECT
 
-   Uses the brand's sparkle icon, tinted
-   Persian Blue / Blue Bird / Malibu instead
-   of colorful emoji so the effect stays
-   on-brand.
+   Same star-burst technique as the Lemonade
+   Stand game's on-serve sparkle: four
+   hand-drawn star shapes (images/star1-4.svg),
+   each re-tinted on the fly to a random brand
+   blue by swapping out their shared #8fcefa
+   base fill -- see randomStarSVG() -- instead
+   of the old single flat glyph recolored via
+   a CSS class.
 ======================================== */
 
-const SPARKLE_ICON_MARKUP =
-    '<svg viewBox="0 0 179.8 170" aria-hidden="true">' +
-    '<polygon points="159.82 49.96 149.85 50 149.86 30 129.88 30 129.88 19.99 149.86 20 149.85 0 159.82 0 159.82 20 179.79 19.99 179.8 30 159.82 29.99 159.82 49.96"/>' +
-    '<polygon points="149.83 169.96 139.86 170 139.87 150 119.89 150 119.89 139.99 139.87 140 139.86 120 149.83 120 149.82 140 169.8 139.99 169.8 150 149.83 149.99 149.83 169.96"/>' +
-    '<path d="M64.87,149.82l-20.03-44.88L0,84.99l44.96-20.07,19.91-44.96,20.01,45.1,44.86,19.96-44.93,20-19.93,44.81ZM64.88,125.25l12.55-27.81,27.77-12.46-27.88-12.52-12.45-27.71-12.55,27.76-27.72,12.49,27.75,12.48,12.53,27.76Z"/>' +
-    '</svg>';
+const STAR_SVGS = [
+
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 217.246 216.698"><g><g><path d="M186.93,93.47l-48.54,21.97c-10.19,4.61-18.35,12.77-22.96,22.96l-21.97,48.54-10.11-22.35-6.69-14.78-5.16-11.41c-4.61-10.19-12.77-18.35-22.96-22.96l-15.24-6.9L0,93.47l48.54-21.96c10.19-4.61,18.35-12.77,22.96-22.96L93.46,0l18.61,41.13,3.36,7.42c4.28,9.46,11.62,17.17,20.81,21.91.7.37,1.42.72,2.15,1.05l21.29,9.63,27.25,12.33Z" fill="#8fcefa"/><path d="M186.93,93.47l-48.54,21.97c-10.19,4.61-18.35,12.77-22.96,22.96l-21.97,48.54-10.11-22.35c24.69-47.1,54.91-71.32,76.33-83.45l27.25,12.33Z" fill="#001d3a" opacity=".05"/><path d="M112.07,41.13c-11.02,2.31-28.89,10.68-41.3,39.56-6.68,15.55-23.67,23.69-37.47,27.85L0,93.47l48.54-21.96c10.19-4.61,18.35-12.77,22.96-22.96L93.46,0l18.61,41.13Z" fill="#fff" opacity=".3"/></g><g><path d="M217.246,168.838l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71-1.98-5.5-5.49-10.25-10.04-13.73-3.16-2.42-6.82-4.22-10.81-5.24l-20.85-5.32,20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68l5.32-20.85,5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39,3.38,7.16,9.48,12.74,17,15.45.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#8fcefa"/><path d="M217.246,168.838l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71,10.93-15.61,22.05-24.99,30.42-30.46.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#001d3a" opacity=".05"/><path d="M176.656,147.218c-7.265,2.09-12.868,7.753-13.42,15.45-.53,7.392-3.983,13.937-10.04,16.73-3.16-2.42-6.82-4.22-10.81-5.24l-20.85-5.32,20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68l5.32-20.85,5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39Z" fill="#fff" opacity=".3"/></g></g></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 186.93 186.94"><g><path d="M186.93,93.47l-48.54,21.97c-10.19,4.61-18.35,12.77-22.96,22.96l-21.97,48.54-10.11-22.35-6.69-14.78-5.16-11.41c-4.61-10.19-12.77-18.35-22.96-22.96l-15.24-6.9L0,93.47l48.54-21.96c10.19-4.61,18.35-12.77,22.96-22.96L93.46,0l18.61,41.13,3.36,7.42c4.28,9.46,11.62,17.17,20.81,21.91.7.37,1.42.72,2.15,1.05l21.29,9.63,27.25,12.33Z" fill="#8fcefa"/><path d="M186.93,93.47l-48.54,21.97c-10.19,4.61-18.35,12.77-22.96,22.96l-21.97,48.54-10.11-22.35c24.69-47.1,54.91-71.32,76.33-83.45l27.25,12.33Z" fill="#001d3a" opacity=".05"/><path d="M112.07,41.13c-11.02,2.31-28.89,10.68-41.3,39.56-6.68,15.55-23.67,23.69-37.47,27.85L0,93.47l48.54-21.96c10.19-4.61,18.35-12.77,22.96-22.96L93.46,0l18.61,41.13Z" fill="#fff" opacity=".3"/></g></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.71 95.72"><g><path d="M95.71,47.86l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71-1.98-5.5-5.49-10.25-10.04-13.73-3.16-2.42-6.82-4.22-10.81-5.24L0,47.86l20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68L47.85,0l5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39,3.38,7.16,9.48,12.74,17,15.45.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#8fcefa"/><path d="M95.71,47.86l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71,10.93-15.61,22.05-24.99,30.42-30.46.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#001d3a" opacity=".05"/><path d="M55.12,26.24c-7.265,2.09-12.868,7.753-13.42,15.45-.53,7.392-3.983,13.937-10.04,16.73-3.16-2.42-6.82-4.22-10.81-5.24L0,47.86l20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68L47.85,0l5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39Z" fill="#fff" opacity=".3"/></g></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.419 165.745"><g><g><path d="M95.71,47.86l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71-1.98-5.5-5.49-10.25-10.04-13.73-3.16-2.42-6.82-4.22-10.81-5.24L0,47.86l20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68L47.85,0l5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39,3.38,7.16,9.48,12.74,17,15.45.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#8fcefa"/><path d="M95.71,47.86l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71,10.93-15.61,22.05-24.99,30.42-30.46.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#001d3a" opacity=".05"/><path d="M55.12,26.24c-7.265,2.09-12.868,7.753-13.42,15.45-.53,7.392-3.983,13.937-10.04,16.73-3.16-2.42-6.82-4.22-10.81-5.24L0,47.86l20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68L47.85,0l5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39Z" fill="#fff" opacity=".3"/></g><g><path d="M127.419,117.886l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71-1.98-5.5-5.49-10.25-10.04-13.73-3.16-2.42-6.82-4.22-10.81-5.24l-20.85-5.32,20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68l5.32-20.85,5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39,3.38,7.16,9.48,12.74,17,15.45.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#8fcefa"/><path d="M127.419,117.886l-20.85,5.32c-10.65,2.72-18.96,11.04-21.68,21.68l-5.33,20.86-5.32-20.86c-.24-.92-.51-1.83-.83-2.71,10.93-15.61,22.05-24.99,30.42-30.46.89.32,1.81.6,2.74.84l20.85,5.33Z" fill="#001d3a" opacity=".05"/><path d="M86.829,96.265c-7.265,2.09-12.868,7.753-13.42,15.45-.53,7.392-3.983,13.937-10.04,16.73-3.16-2.42-6.82-4.22-10.81-5.24l-20.85-5.32,20.85-5.33c10.64-2.72,18.96-11.03,21.68-21.68l5.32-20.85,5.33,20.85c.48,1.87,1.13,3.68,1.94,5.39Z" fill="#fff" opacity=".3"/></g></g></svg>'
+
+];
+
+// Same full palette as the Lemonade Stand game's randomStarSVG() (2026-09-11,
+// per Kayla) -- one blue anchors it back to the brand, then the fully
+// saturated version of each secondary color, so a burst reads as a proper
+// rainbow shower instead of one hue.
+const STAR_TONES = [
+    "#258BFF",
+    "#FF2525",
+    "#FF25BA",
+    "#FF9D25",
+    "#FFF025",
+    "#49FF25",
+    "#9D25FF"
+];
+
+function randomStarSVG() {
+
+    const template =
+        STAR_SVGS[
+            Math.floor(Math.random() * STAR_SVGS.length)
+        ];
+
+    const tone =
+        STAR_TONES[
+            Math.floor(Math.random() * STAR_TONES.length)
+        ];
+
+    // Every star in STAR_SVGS shares this one #8fcefa base fill for its
+    // main facets -- swapping it here recolors the whole star while
+    // leaving its dark shadow / white highlight facets (what actually
+    // give it its shape) untouched.
+    return template.split("#8fcefa").join(tone);
+
+}
 
 
 function createSparkleBurst() {
@@ -256,24 +296,25 @@ function createSparkleBurst() {
 
     const gameRect = gameArea.getBoundingClientRect();
 
+    // #game-area is scaled down to fit the window (see the responsive
+    // transform on #game-area in style.css), so gameRect/piggyRect are in
+    // real screen pixels -- convert back into the stage's own unscaled
+    // pixels before using them as a "left"/"top" position, same fix as
+    // the drag handler above, or the burst lands off-center from the
+    // piggy bank on any screen where the stage isn't shown at 100% scale.
+    const scale = gameRect.width / gameArea.offsetWidth;
+
 
     const centerX =
-        piggyRect.left +
+        (piggyRect.left +
         piggyRect.width / 2 -
-        gameRect.left;
+        gameRect.left) / scale;
 
 
     const centerY =
-        piggyRect.top +
+        (piggyRect.top +
         piggyRect.height / 2 -
-        gameRect.top;
-
-
-    const sparkleTones = [
-        "tone-a",
-        "tone-b",
-        "tone-c"
-    ];
+        gameRect.top) / scale;
 
 
     for (let i = 0; i < 8; i++) {
@@ -282,17 +323,7 @@ function createSparkleBurst() {
 
         sparkle.classList.add("catch-sparkle");
 
-        sparkle.classList.add(
-            sparkleTones[
-                Math.floor(
-                    Math.random() *
-                    sparkleTones.length
-                )
-            ]
-        );
-
-
-        sparkle.innerHTML = SPARKLE_ICON_MARKUP;
+        sparkle.innerHTML = randomStarSVG();
 
 
         sparkle.style.left = `${centerX}px`;
