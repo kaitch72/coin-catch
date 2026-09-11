@@ -430,12 +430,13 @@ body {
 
     position: absolute;
 
-    left: 50%;
+    /* Left edge, not center -- pre-computed so it starts
+       centered without needing a transform (JS positions
+       it the same way during drag, so the two never fight
+       over what "left" means). */
+    left: calc(50% - 64px);
 
     bottom: 30px;
-
-    transform:
-        translateX(-50%);
 
     width: 128px;
 

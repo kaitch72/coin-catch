@@ -84,9 +84,6 @@ const coinTypes = [
    PIGGY BANK DRAGGING
 ======================================== */
 
-let dragOffsetX = 0;
-
-
 piggyBank.addEventListener("pointerdown", (event) => {
 
     if (!gameRunning) {
@@ -99,16 +96,6 @@ piggyBank.addEventListener("pointerdown", (event) => {
 
     piggyBank.setPointerCapture(event.pointerId);
 
-    // Remember where on the piggy bank it was grabbed
-    // (offset from its center) so dragging moves it
-    // relative to that grab point instead of snapping
-    // its center straight to the pointer.
-    const piggyRect = piggyBank.getBoundingClientRect();
-
-    const piggyCenterX = piggyRect.left + piggyRect.width / 2;
-
-    dragOffsetX = event.clientX - piggyCenterX;
-
 });
 
 
@@ -120,24 +107,28 @@ piggyBank.addEventListener("pointermove", (event) => {
 
     const gameRect = gameArea.getBoundingClientRect();
 
-    let x = event.clientX - gameRect.left - dragOffsetX;
-
     const piggyWidth = piggyBank.offsetWidth;
 
     const halfPiggyWidth = piggyWidth / 2;
 
+    // "left" is the piggy bank's LEFT EDGE -- there is no
+    // CSS transform shifting it anymore, so this is the
+    // only math involved. Center the piggy bank under the
+    // pointer by pulling the edge back half its own width.
+    let leftEdge = (event.clientX - gameRect.left) - halfPiggyWidth;
 
-    if (x < halfPiggyWidth) {
-        x = halfPiggyWidth;
+
+    if (leftEdge < 0) {
+        leftEdge = 0;
     }
 
 
-    if (x > gameRect.width - halfPiggyWidth) {
-        x = gameRect.width - halfPiggyWidth;
+    if (leftEdge > gameRect.width - piggyWidth) {
+        leftEdge = gameRect.width - piggyWidth;
     }
 
 
-    piggyBank.style.left = `${x}px`;
+    piggyBank.style.left = `${leftEdge}px`;
 
 });
 
