@@ -469,28 +469,18 @@ body {
 
     height: 100%;
 
-    border-radius: 50%;
-
-    background: var(--white);
-
     display: flex;
 
     align-items: center;
 
     justify-content: center;
-
-    box-shadow:
-        0 8px 0 var(--hawkes-blue),
-        0 10px 16px rgba(10, 23, 36, 0.18);
-
-    border: 4px solid var(--persian-blue);
 }
 
 
 .piggy-icon {
 
-    width: 60%;
-    height: 60%;
+    width: 115%;
+    height: 115%;
 
     fill: var(--persian-blue);
 }
@@ -502,12 +492,15 @@ body {
     height: 110px;
 
     margin: 0 auto;
+}
 
-    border-width: 3px;
 
-    box-shadow:
-        0 6px 0 rgba(255, 255, 255, 0.25),
-        0 8px 14px rgba(0, 0, 0, 0.25);
+.piggy-bank-line {
+
+    width: 70%;
+    height: 70%;
+
+    fill: var(--persian-blue);
 }
 
 
