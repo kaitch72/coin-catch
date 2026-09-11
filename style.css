@@ -287,10 +287,10 @@ body {
 
     align-items: flex-end;
 
-    gap: 4px;
+    gap: 5px;
 
     padding:
-        7px 18px;
+        9px 21px;
 }
 
 
@@ -300,9 +300,9 @@ body {
 
     align-items: center;
 
-    gap: 5px;
+    gap: 6px;
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: 700;
 
@@ -314,8 +314,8 @@ body {
 
 .score-icon {
 
-    width: 13px;
-    height: 13px;
+    width: 15px;
+    height: 15px;
 
     fill: var(--persian-blue);
 }
@@ -323,7 +323,7 @@ body {
 
 #score {
 
-    font-size: 30px;
+    font-size: 34px;
 
     font-weight: 800;
 
@@ -368,12 +368,12 @@ body {
 
     z-index: 20;
 
-    min-width: 64px;
+    min-width: 74px;
 
-    height: 44px;
+    height: 51px;
 
     padding:
-        0 18px;
+        0 21px;
 
     display: flex;
 
@@ -381,9 +381,9 @@ body {
 
     justify-content: center;
 
-    gap: 6px;
+    gap: 7px;
 
-    font-size: 22px;
+    font-size: 26px;
 
     font-weight: 800;
 
@@ -393,8 +393,8 @@ body {
 
 .timer-icon {
 
-    width: 12px;
-    height: 16px;
+    width: 14px;
+    height: 18px;
 
     fill: var(--persian-blue);
 }
@@ -418,7 +418,10 @@ body {
 
     overflow: hidden;
 
-    background: var(--hawkes-blue);
+    background-image: url("images/background.svg");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
 }
 
 
@@ -436,7 +439,7 @@ body {
        over what "left" means). */
     left: calc(50% - 64px);
 
-    bottom: 30px;
+    bottom: 67px;
 
     width: 128px;
 

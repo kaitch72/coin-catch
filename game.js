@@ -107,6 +107,16 @@ piggyBank.addEventListener("pointermove", (event) => {
 
     const gameRect = gameArea.getBoundingClientRect();
 
+    // #game-area is scaled down to fit the window (see the responsive
+    // transform on #game-area in style.css). getBoundingClientRect()
+    // reports gameRect in real screen pixels (post-scale), but the
+    // piggy bank's own CSS "left" lives in the stage's unscaled
+    // 1920x1080 coordinate space -- and offsetWidth is unscaled too.
+    // Convert the pointer position back into stage pixels first, or
+    // the piggy bank drifts away from the cursor on any screen where
+    // the stage isn't shown at 100% scale.
+    const scale = gameRect.width / gameArea.offsetWidth;
+
     const piggyWidth = piggyBank.offsetWidth;
 
     const halfPiggyWidth = piggyWidth / 2;
@@ -115,7 +125,8 @@ piggyBank.addEventListener("pointermove", (event) => {
     // CSS transform shifting it anymore, so this is the
     // only math involved. Center the piggy bank under the
     // pointer by pulling the edge back half its own width.
-    let leftEdge = (event.clientX - gameRect.left) - halfPiggyWidth;
+    let leftEdge =
+        (event.clientX - gameRect.left) / scale - halfPiggyWidth;
 
 
     if (leftEdge < 0) {
@@ -123,8 +134,8 @@ piggyBank.addEventListener("pointermove", (event) => {
     }
 
 
-    if (leftEdge > gameRect.width - piggyWidth) {
-        leftEdge = gameRect.width - piggyWidth;
+    if (leftEdge > gameArea.offsetWidth - piggyWidth) {
+        leftEdge = gameArea.offsetWidth - piggyWidth;
     }
 
 
