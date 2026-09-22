@@ -287,10 +287,10 @@ body {
 
     align-items: flex-end;
 
-    gap: 5px;
+    gap: 8px;
 
     padding:
-        9px 21px;
+        14px 28px;
 }
 
 
@@ -300,13 +300,13 @@ body {
 
     align-items: center;
 
-    gap: 6px;
+    gap: 9px;
 
-    font-size: 13px;
+    font-size: 17px;
 
     font-weight: 700;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.8px;
 
     color: var(--persian-blue);
 }
@@ -314,8 +314,8 @@ body {
 
 .score-icon {
 
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
 
     fill: var(--persian-blue);
 }
@@ -323,7 +323,7 @@ body {
 
 #score {
 
-    font-size: 34px;
+    font-size: 46px;
 
     font-weight: 800;
 
@@ -368,12 +368,12 @@ body {
 
     z-index: 20;
 
-    min-width: 74px;
+    min-width: 100px;
 
-    height: 51px;
+    height: 68px;
 
     padding:
-        0 21px;
+        0 28px;
 
     display: flex;
 
@@ -381,9 +381,9 @@ body {
 
     justify-content: center;
 
-    gap: 7px;
+    gap: 9px;
 
-    font-size: 26px;
+    font-size: 34px;
 
     font-weight: 800;
 
@@ -393,8 +393,8 @@ body {
 
 .timer-icon {
 
-    width: 14px;
-    height: 18px;
+    width: 18px;
+    height: 23px;
 
     fill: var(--persian-blue);
 }
@@ -749,10 +749,10 @@ body {
 
 
 /* ========================================
-   RESULT PIG
+   RESULT TROPHY
 ======================================== */
 
-.results-pig {
+.results-trophy {
 
     position: relative;
 
@@ -789,14 +789,12 @@ body {
 }
 
 
-.trophy-icon {
+.trophy-icon-large {
 
-    width: 40px;
-    height: 40px;
+    width: 70%;
+    height: 70%;
 
-    fill: var(--malibu);
-
-    flex-shrink: 0;
+    fill: var(--white);
 }
 
 
