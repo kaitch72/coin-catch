@@ -22,7 +22,14 @@ const startButton = document.getElementById("start-button");
 let isDragging = false;
 let score = 0;
 let timeRemaining = 30;
-let gameRunning = true;
+let gameRunning = false;
+
+/* Handles for everything a round has running, so a restart can stop
+   ALL of it before starting fresh (2026-09-23 fix: restarting mid-round
+   used to start a second coin animation loop on top of the first, which
+   is what made the coins fall faster after every restart). */
+let coinLoopId = null;
+let openingCoinTimers = [];
 
 let timerInterval;
 let coinSpawnInterval;
@@ -666,7 +673,7 @@ function updateCoins() {
     }
 
 
-    requestAnimationFrame(updateCoins);
+    coinLoopId = requestAnimationFrame(updateCoins);
 
 }
 
@@ -720,6 +727,10 @@ function endGame() {
 
 function startNewGame() {
 
+    /* Stop whatever the previous round left running (timer, spawner,
+       animation loop, queued opening coins) so only one of each exists. */
+    stopRound();
+
     score = 0;
 
     timeRemaining = 30;
@@ -772,22 +783,22 @@ function startNewGame() {
     createCoin();
 
 
-    setTimeout(() => {
+    openingCoinTimers.push(setTimeout(() => {
 
         if (gameRunning) {
             createCoin();
         }
 
-    }, 500);
+    }, 500));
 
 
-    setTimeout(() => {
+    openingCoinTimers.push(setTimeout(() => {
 
         if (gameRunning) {
             createCoin();
         }
 
-    }, 1000);
+    }, 1000));
 
 
     /* Continue spawning */
@@ -812,11 +823,87 @@ function startNewGame() {
     startTimer();
 
 
-    /* Start animation */
+    /* Start animation (exactly one loop -- stopRound() above cancelled
+       any previous one) */
 
-    requestAnimationFrame(
+    coinLoopId = requestAnimationFrame(
         updateCoins
     );
+
+}
+
+
+/* ========================================
+   STOP ROUND
+   Halts everything a round has running and
+   clears the coins off screen. Used by
+   startNewGame() and the top bar restart.
+======================================== */
+
+function stopRound() {
+
+    gameRunning = false;
+
+    isDragging = false;
+
+    clearInterval(timerInterval);
+
+    clearInterval(coinSpawnInterval);
+
+    if (coinLoopId !== null) {
+        cancelAnimationFrame(coinLoopId);
+        coinLoopId = null;
+    }
+
+    openingCoinTimers.forEach(clearTimeout);
+    openingCoinTimers = [];
+
+    for (
+        let i = coins.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        removeCoin(coins[i]);
+
+    }
+
+}
+
+
+/* ========================================
+   RESTART TO START SCREEN
+   Top bar restart: a real start-over, same
+   as Driver Decides -- stops the round,
+   resets score and timer, and brings back
+   the intro popup so the player taps Start
+   to begin again.
+======================================== */
+
+function restartGame() {
+
+    stopRound();
+
+    score = 0;
+
+    timeRemaining = 30;
+
+    updateScore();
+
+    updateTimer();
+
+    if (earnedDisplay) {
+        earnedDisplay.textContent =
+            "Catch a coin!";
+    }
+
+    resultsScreen.style.display =
+        "none";
+
+    if (startScreen) {
+        startScreen.style.display =
+            "flex";
+    }
 
 }
 
@@ -838,9 +925,8 @@ playAgainButton.addEventListener(
 /* ========================================
    TOP BAR RESTART BUTTON
 
-   Same "start over" action as Play Again,
-   just always available from the top bar
-   instead of only on the results screen.
+   Stops the round and returns to the intro
+   popup (see restartGame above).
 ======================================== */
 
 if (restartButton) {
@@ -849,7 +935,7 @@ if (restartButton) {
         "click",
         () => {
 
-            startNewGame();
+            restartGame();
 
         }
     );

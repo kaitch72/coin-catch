@@ -967,20 +967,17 @@ body {
 
     overflow: hidden;
 
-    width: 560px;
-
-    max-width: 80vw;
-
-    padding:
-        56px 55px 50px;
+    width: 640px;
 
     background: var(--white);
 
-    border-radius: 40px;
+    border-radius: 32px;
+
+    padding: 48px 40px 36px;
 
     box-shadow:
-        0 24px 60px
-        rgba(10, 23, 36, 0.22);
+        0 20px 44px
+        rgba(10, 23, 36, 0.28);
 
     text-align: center;
 
@@ -998,11 +995,11 @@ body {
 
     position: absolute;
 
-    top: -70px;
-    right: -70px;
+    top: -88px;
+    right: -88px;
 
-    width: 220px;
-    height: 220px;
+    width: 250px;
+    height: 250px;
 
     border-radius: 50%;
 
@@ -1018,19 +1015,27 @@ body {
 
     position: absolute;
 
-    bottom: -90px;
-    left: -60px;
+    bottom: -76px;
+    left: -53px;
 
-    width: 170px;
-    height: 170px;
+    width: 150px;
+    height: 150px;
 
     border-radius: 50%;
 
     background: var(--onahau);
 
-    opacity: 0.6;
+    opacity: 0.7;
 
     z-index: 0;
+}
+
+
+#start-box > * {
+
+    position: relative;
+
+    z-index: 1;
 }
 
 
@@ -1044,10 +1049,12 @@ body {
 
     z-index: 1;
 
-    width: 120px;
-    height: 120px;
+    flex-shrink: 0;
 
-    margin-bottom: 30px;
+    width: 125px;
+    aspect-ratio: 1 / 1;
+
+    margin: 0 auto 26px;
 
     animation:
         startBadgeFloat
@@ -1078,15 +1085,15 @@ body {
     justify-content: center;
 
     box-shadow:
-        0 14px 26px
+        0 12px 22px
         rgba(25, 67, 220, 0.35);
 }
 
 
 .start-badge-icon {
 
-    width: 56px;
-    height: 56px;
+    width: 52%;
+    height: 52%;
 
     fill: var(--white);
 }
@@ -1099,7 +1106,7 @@ body {
     }
 
     50% {
-        transform: translateY(-8px) rotate(-5deg);
+        transform: translateY(-7px) rotate(-5deg);
     }
 }
 
@@ -1135,25 +1142,21 @@ body {
 
 .start-sparkle--a {
 
-    top: -8px;
-    left: -12px;
+    top: -6px;
+    left: -10px;
 
-    width: 24px;
-    height: 24px;
-
-    fill: var(--blue-bird);
+    width: 22px;
+    height: 22px;
 }
 
 
 .start-sparkle--b {
 
     bottom: 2px;
-    right: -10px;
+    right: -8px;
 
-    width: 17px;
-    height: 17px;
-
-    fill: var(--malibu);
+    width: 16px;
+    height: 16px;
 
     animation-delay: 0.5s;
 }
@@ -1179,37 +1182,31 @@ body {
 
 #start-box h1 {
 
-    position: relative;
+    margin: 0 0 14px;
 
-    z-index: 1;
-
-    margin: 0 0 16px;
-
-    font-size: 40px;
+    font-size: 36px;
 
     font-weight: 800;
 
     color: var(--blue-black);
 
     letter-spacing: -0.01em;
+
+    line-height: 50px;
 }
 
 
 .start-message {
 
-    position: relative;
+    margin: 0 auto 30px;
 
-    z-index: 1;
+    max-width: 480px;
 
-    margin: 0 0 34px;
+    font-size: 20px;
 
-    max-width: 380px;
+    font-weight: 400;
 
-    font-size: 19px;
-
-    font-weight: 500;
-
-    line-height: 1.55;
+    line-height: 1.5;
 
     color: rgba(10, 23, 36, 0.68);
 }
@@ -1221,22 +1218,20 @@ body {
 
 #start-button {
 
-    position: relative;
-
-    z-index: 1;
-
     display: inline-flex;
 
     align-items: center;
 
     justify-content: center;
 
+    gap: 12px;
+
     padding:
-        20px 64px;
+        18px 42px;
 
     border: none;
 
-    border-radius: 20px;
+    border-radius: 18px;
 
     background: var(--persian-blue);
 
@@ -1244,27 +1239,24 @@ body {
 
     font-family: var(--font-brand);
 
-    font-size: 26px;
+    font-size: 30px;
 
     font-weight: 800;
 
     cursor: pointer;
 
     box-shadow:
-        0 6px 0 var(--sky-blue);
+        0 6px 0 var(--hawkes-blue);
 
     transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 
 #start-button:hover {
 
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 0 var(--sky-blue);
+    transform: translateY(-3px);
 }
 
 
@@ -1273,5 +1265,120 @@ body {
     transform: translateY(3px);
 
     box-shadow:
-        0 2px 0 var(--sky-blue);
+        0 2px 0 var(--hawkes-blue);
+}
+
+/* Start button now styled exactly like Lemonade Stand's intro popup
+   Start button (2026-09-23, per Kayla): fixed 192x70, 0 side padding
+   (width alone sets the size), 18px radius, 30px/800 label on one line,
+   5px Hawkes Blue (#D7E7FF) shadow, -2px hover lift. #start-box card
+   size untouched. */
+#start-button {
+    box-sizing: border-box;
+    width: 192px;
+    height: 70px;
+    padding: 18px 0;
+    border-radius: 18px;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 5px 0 var(--hawkes-blue);
+}
+
+#start-button:hover {
+    transform: translateY(-2px);
+}
+
+#start-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--hawkes-blue);
+}
+
+/* ========================================
+   RESULTS POPUP SIZING (2026-09-23, per Kayla)
+   - Same 640px width as the intro popup (#start-box); height stays
+     auto so it grows with its content. max-width cap removed to match
+     the intro card exactly.
+   - Play Again matches the intro Start button's size (192x70, 18px
+     radius, 30px/800, no icon) and is styled identically to Driver
+     Decides' end-of-round button.
+======================================== */
+
+#results-box {
+    width: 640px;
+    max-width: none;
+}
+
+#play-again {
+    box-sizing: border-box;
+    width: 192px;
+    height: 70px;
+    padding: 18px 0;
+    gap: 0;
+    font-size: 30px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   RESTART BUTTON + TITLE + SAVED ALIGNMENT (2026-09-23, per Kayla)
+   - Restart button is now exactly Driver Decides' .iconButton: 50px
+     white circle, 3px Persian Blue ring, no shadow, 24px icon, Hawkes
+     Blue fill on hover, no lift/press movement.
+   - Game title in Luckiest Guy (Google Font, loaded in index.html),
+     weight 400 since the font only ships one weight.
+   - SAVED card content left-aligned: icon lines up with the left edge
+     of the dollar amount.
+======================================== */
+#restart-button {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--persian-blue);
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: none;
+    padding: 0;
+    transition: none;
+}
+
+#restart-button .restart-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--persian-blue);
+}
+
+#restart-button:hover {
+    background: var(--hawkes-blue);
+    transform: none;
+}
+
+#restart-button:active {
+    transform: none;
+}
+
+#game-title {
+    font-family: "Luckiest Guy", cursive;
+    font-weight: 400;
+}
+
+.score-card {
+    align-items: flex-start;
+}
+
+
+/* ================= TOP BAR TITLE + RESTART POSITION (2026-09-23, per Kayla) =================
+   Same in Driver Decides and Coin Catch:
+   - Title: Luckiest Guy, 38px.
+   - Luckiest Guy's letters sit high in their line box (more empty space
+     under the text than above it), so the title is nudged down
+     5.5px to sit visually centered in the white bar.
+   - Restart button: 26px from the right edge of the screen, vertically
+     centered in the bar. */
+#game-title {
+    font-size: 38px;
+    line-height: 1;
+    position: relative;
+    top: 5.5px;
 }
