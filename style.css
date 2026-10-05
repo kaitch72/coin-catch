@@ -1427,3 +1427,73 @@ body {
         display: none;
     }
 }
+
+
+/* ================= FINALE SPARKLE (2026-10-05, per Kayla) =================
+   The results popup uses the grand-finale yellow bobbing star (same size,
+   color, glow and 1.8s loop as Lemonade Stand / Scooter Sort / Budget
+   Builder) instead of the sparkle row + white trophy. */
+
+#results-box .results-sparkles,
+#results-box .results-trophy {
+    display: none;
+}
+
+#results-box .results-finale-sparkle {
+    display: flex;
+    justify-content: center;
+    margin: 4px auto 22px;
+    line-height: 0;
+}
+
+#results-box .results-finale-sparkle svg {
+    width: 92px;
+    height: 87px;
+    fill: #FFF025;
+    filter: drop-shadow(0 0 18px rgba(255, 240, 37, 0.55));
+    animation: finale-sparkle-bob 1.8s ease-in-out infinite;
+}
+
+@keyframes finale-sparkle-bob {
+    0%, 100% { transform: scale(1) rotate(0); }
+    50%      { transform: scale(1.14) rotate(10deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #results-box .results-finale-sparkle svg {
+        animation: none;
+    }
+}
+
+
+/* ================= RESULTS TOTAL CARD (2026-10-05, per Kayla) =================
+   The caught amount sits in a white hero card with a big green value,
+   same look as Lemonade Stand / Scooter Sort's finale "Your Final Total"
+   card. */
+
+#results-box .results-total-hero {
+    margin: 14px 0 18px;
+    padding: 18px 28px 16px;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(10, 23, 36, 0.3);
+    text-align: center;
+}
+
+#results-box .results-total-label {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #5b6475;
+}
+
+#results-box .results-total-hero #final-score {
+    margin: 0;
+    font-size: 68px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #4CA350;
+    font-variant-numeric: tabular-nums;
+}

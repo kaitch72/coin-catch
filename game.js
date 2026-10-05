@@ -964,6 +964,34 @@ if (startScreen) {
 
 }
 
+
+/* ================= RESULTS JUMP (2026-10-05, per Kayla) =================
+   Open index.html#results (also #result, or ?results=1) to skip the
+   intro and land straight on the end-of-game results popup, with the
+   real (zero) score. Play Again works normally from there. Changing the
+   hash on an open page reloads so the jump takes effect. */
+
+function getJumpToResultsFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return /^#results?$/i.test(window.location.hash) ||
+        params.get("results") === "1" || params.get("result") === "1";
+}
+
+window.addEventListener("hashchange", function () {
+    window.location.reload();
+});
+
+if (getJumpToResultsFromUrl()) {
+
+    if (startScreen) {
+        startScreen.style.display = "none";
+    }
+
+    // Deferred one tick: endGame() uses the popup-confetti code further
+    // down this file, whose consts aren't initialized yet.
+    setTimeout(endGame, 0);
+}
+
 if (startButton) {
 
     startButton.addEventListener(
