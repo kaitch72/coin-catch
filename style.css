@@ -46,8 +46,9 @@
 /* ========================================
    BASIC PAGE
 
-   The page itself is the neutral brand
-   canvas (Mystic) that every game's fixed
+   The page itself is the brand canvas
+   (Hawkes Blue + arrow pattern, 2026-10-06)
+   that every game's fixed
    1920x1080 stage sits on top of, centered,
    as its own rounded card.
 ======================================== */
@@ -66,7 +67,18 @@ body {
 
     font-family: var(--font-brand);
 
-    background: var(--mystic);
+    /* Page border around the stage: Hawkes Blue
+       with the Securityplus brand arrow pattern
+       on top (arrows 50% opacity, set in the SVG).
+       One SVG tile shown at 40x40 (arrow
+       ~29px), repeated, so
+       it fills any window width/height. Centered
+       so the pattern is symmetric around the stage. */
+    background-color: var(--hawkes-blue);
+    background-image: url("images/brand-arrow-pattern.svg");
+    background-repeat: repeat;
+    background-size: 40px 40px;
+    background-position: center center;
 }
 
 body {
